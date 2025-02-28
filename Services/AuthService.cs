@@ -21,7 +21,7 @@ namespace Services
 
         public async Task<string?> LoginAsync(string username, string password)
         {
-            // isso só foi feito assim porque é um teste, em um projeto real, não faça isso
+            // isso só foi feito assim porque é um teste, 
             if (username != "admin")
             {
                 var validate = await _userRepository.ValidateCredentials(username, password);

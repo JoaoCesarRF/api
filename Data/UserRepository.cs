@@ -26,5 +26,20 @@ namespace Data
             var user = await GetUserByUsernameAsync(username);
             return user != null && user.Password == password;
         }
+        public async Task<List<User>> GetUsersAsync(int page = 1, int size = 10, string order = "")
+        {
+            var query = _context.User.AsQueryable();
+
+            if (!string.IsNullOrEmpty(order))
+            {
+                if (order.Contains("username"))
+                    query = order.EndsWith("desc") ? query.OrderByDescending(u => u.Username) : query.OrderBy(u => u.Username);
+            }
+
+            return await query.Skip((page - 1) * size).Take(size).ToListAsync();
+        }
+
+
+
     }
 }

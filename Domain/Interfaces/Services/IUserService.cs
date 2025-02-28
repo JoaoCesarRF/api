@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces.Data
+namespace Domain.Interfaces.Services
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserService
     {
-        Task<User?> GetUserByUsernameAsync(string username);
-        Task<bool> ValidateCredentials(string username, string password);
+        Task UpdateUserAsync(User user);
+        Task  DeleteUserAsync(Guid id);
+        Task<User> AddUserAsync(User user);
         Task<List<User>> GetUsersAsync(int page = 1, int size = 10, string order = "");
-
     }
 }

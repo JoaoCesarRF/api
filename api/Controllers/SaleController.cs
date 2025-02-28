@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -10,9 +11,9 @@ namespace api.Controllers
     [Produces("application/json")]
     public class SaleController : ControllerBase
     {
-        private readonly SaleService _saleService;
+        private readonly ISaleService _saleService;
 
-        public SaleController(SaleService saleService)
+        public SaleController(ISaleService saleService)
         {
             _saleService = saleService;
         }

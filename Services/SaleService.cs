@@ -1,9 +1,10 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces.Data;
+using Domain.Interfaces.Services;
 
 namespace Services
 {
-    public class SaleService
+    public class SaleService : ISaleService
     {
         private readonly ISaleRepository _saleRepository;
 
