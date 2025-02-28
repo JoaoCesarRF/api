@@ -11,17 +11,18 @@ namespace api.Controllers
     {
         private IAuthService _authService;
 
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
         [HttpPost("login")]
-        public IActionResult Login([FromBody] User user)
+        public async Task<IActionResult> Login([FromBody] User user)
         {
             
-            if (user.Username == "admin" && user.Password == "password")
-            {
-                var token = _authService.LoginAsync(user.Username, user.Password);
-                return Ok(new { token });
-            }
-
-            return Unauthorized();
+      
+                var token = await _authService.LoginAsync(user.Username, user.Password);
+                return !string.IsNullOrEmpty(token) ? Ok(new { token }) : Unauthorized();
         }
     }
 }

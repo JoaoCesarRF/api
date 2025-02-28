@@ -8,6 +8,6 @@ namespace Domain.Interfaces.Services
 {
     public interface IAuthService
     {
-        string LoginAsync(string username, string password);
+        Task<string?> LoginAsync(string username, string password);
     }
 }

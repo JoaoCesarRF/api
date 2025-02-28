@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces.Services;
+﻿using Domain.Interfaces.Data;
+using Domain.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,14 +11,23 @@ namespace Services
     public class AuthService : IAuthService
     {
         private readonly IConfiguration _configuration;
+        private readonly IUserRepository _userRepository;
 
-        public AuthService(IConfiguration configuration)
+        public AuthService(IConfiguration configuration, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _configuration = configuration;
         }
 
-        public string LoginAsync(string username, string password)
+        public async Task<string?> LoginAsync(string username, string password)
         {
+            // isso só foi feito assim porque é um teste, em um projeto real, não faça isso
+            if (username != "admin")
+            {
+                var validate = await _userRepository.ValidateCredentials(username, password);
+                if (!validate) return null;
+            }
+
             var jwtSettings = _configuration.GetSection("Jwt");
             var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
