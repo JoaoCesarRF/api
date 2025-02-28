@@ -7,6 +7,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class SaleController : ControllerBase
     {
         private readonly SaleService _saleService;
@@ -23,10 +24,10 @@ namespace api.Controllers
             return Ok(createdSale);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetSale(Guid id)
+        [HttpGet("GetSale")]
+        public async Task<IActionResult> GetSale([FromQuery] Guid id)
         {
-            var sale = await _saleService.by(id);
+            var sale = await _saleService.GetSaleByIdAsync(id);
             return Ok(sale);
         }
     }
