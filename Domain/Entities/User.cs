@@ -9,27 +9,27 @@ namespace Domain.Entities
     public class User : EntityBase
     {
 
-        public string Email { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public Name Name { get; set; }
-        public Address Address { get; set; }
-        public string Phone { get; set; }
-        public string Status { get; set; } 
-        public string Role { get; set; }   
+        public string Email { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public Name Name { get; set; } = new Name();
+        public Address Address { get; set; } = new Address();
+        public string Phone { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
     }
 
     public class Name
     {
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string Firstname { get; set; } = string.Empty;
+        public string Lastname { get; set; } = string.Empty;
     }
 
     public class Address
     {
-        public string City { get; set; }
-        public string Street { get; set; }
-        public int Number { get; set; }
+        public string City { get; set; } = string.Empty;
+        public string Street { get; set; } = string.Empty;
+        public int Number { get; set; } = 0;
         public string Zipcode { get; set; }
         public Geolocation Geolocation { get; set; }
     }

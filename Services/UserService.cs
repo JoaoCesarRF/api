@@ -32,9 +32,16 @@ namespace Services
             
         }
 
-        public async Task<List<User>> GetUsersAsync(int page = 1, int size = 10, string order = "")
+        public async Task<User> GetUserById(Guid id)
         {
-            return await _userRepository.GetUsersAsync(page, size, order);
+         return await _userRepository.GetById(id);
+        }
+
+        public async Task<(List<User> Users, int TotalItems)> GetUsersWithTotalCountAsync(int page = 1, int size = 10, string order = "")
+        {
+            var users = await _userRepository.GetUsersAsync(page, size, order);
+            var totalItems = await _userRepository.Count();
+            return (users, totalItems);
         }
 
         public async Task UpdateUserAsync(User user)

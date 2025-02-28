@@ -12,6 +12,7 @@ namespace Domain.Interfaces.Services
         Task UpdateUserAsync(User user);
         Task  DeleteUserAsync(Guid id);
         Task<User> AddUserAsync(User user);
-        Task<List<User>> GetUsersAsync(int page = 1, int size = 10, string order = "");
+        Task<User> GetUserById(Guid id);
+        Task<(List<User> Users, int TotalItems)> GetUsersWithTotalCountAsync(int page = 1, int size = 10, string order = "");
     }
 }
