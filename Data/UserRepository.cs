@@ -39,7 +39,11 @@ namespace Data
             return await query.Skip((page - 1) * size).Take(size).ToListAsync();
         }
 
-
-
+        public async Task<bool> AddUser(User user)
+        {
+            var add = await _context.User.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return add is null;
+        }
     }
 }

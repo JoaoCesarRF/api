@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces.Data;
+﻿using Domain.Entities;
+using Domain.Interfaces.Data;
 using Domain.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +22,7 @@ namespace Services
 
         public async Task<string?> LoginAsync(string username, string password)
         {
-            // isso só foi feito assim porque é um teste, 
+            
             if (username != "admin")
             {
                 var validate = await _userRepository.ValidateCredentials(username, password);
@@ -29,13 +30,15 @@ namespace Services
             }
 
             var jwtSettings = _configuration.GetSection("Jwt");
-            var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+            var key = Encoding.ASCII.GetBytes(jwtSettings.Value);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                new Claim(ClaimTypes.Name, username)
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, "AddProduct") 
+
             }),
                 Expires = DateTime.UtcNow.AddHours(1), // Token expira em 1 hora
                 SigningCredentials = new SigningCredentials(
@@ -43,12 +46,19 @@ namespace Services
                     SecurityAlgorithms.HmacSha256Signature
                 ),
                 Issuer = jwtSettings["Issuer"],
-                Audience = jwtSettings["Audience"]
+                Audience = jwtSettings["Audience"],
+
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<bool> AddUser(User user)
+        {
+            
+            return await _userRepository.AddUser(user);
         }
     }
 }

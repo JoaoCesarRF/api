@@ -19,10 +19,32 @@ namespace api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] User user)
         {
-            
-      
+            try
+            {
+
                 var token = await _authService.LoginAsync(user.Username, user.Password);
-                return !string.IsNullOrEmpty(token) ? Ok(new { token }) : Unauthorized();
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpPost("AddUser")]
+        public async Task<IActionResult> AddUser([FromBody] User user)
+        {
+            try
+            {
+
+                var token = await _authService.AddUser(user);
+                return Ok();
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
         }
     }
 }

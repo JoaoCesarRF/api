@@ -1,10 +1,13 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static api.DependencyInjection;
 
 namespace api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -51,7 +54,7 @@ namespace api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [RolePermissionAttribute("AddProduct")]
         [HttpPost]
         public async Task<IActionResult> AddProduct([FromBody] Product product)
         {
